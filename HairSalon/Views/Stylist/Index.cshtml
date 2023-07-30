@@ -27,6 +27,7 @@
                 <th>Stylist ID</th>
                 <th>Name</th>
                 <th>Specialties</th>
+                <th></th> 
             </tr>
         </thead>
         <tbody>
@@ -36,6 +37,9 @@
                     <td>@stylist.StylistId</td>
                     <td>@stylist.Name</td>
                     <td>@stylist.Specialties</td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@stylist.StylistId">View Details</a>
+                    </td>
                 </tr>
             }
         </tbody>

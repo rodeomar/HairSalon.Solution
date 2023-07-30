@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using HairSalon.Models;
 using MySqlConnector;
-using System.Collections.Generic;
 
 public class StylistController : Controller
 {
@@ -75,5 +74,48 @@ public class StylistController : Controller
             }
         }
         return stylists;
+    }
+
+
+    // Action to view details of a specific stylist
+    public IActionResult Details(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        Stylist stylist = GetStylistById(id.Value);
+        if (stylist == null)
+        {
+            return NotFound();
+        }
+
+        return View(stylist);
+    }
+
+    // Helper method to get a stylist by ID from the database
+    private Stylist GetStylistById(int id)
+    {
+        using (MySqlConnection conn = GetConnection())
+        {
+            conn.Open();
+            string sql = "SELECT * FROM Stylist WHERE StylistId = @StylistId";
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@StylistId", id);
+            using (var reader = cmd.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    return new Stylist
+                    {
+                        StylistId = reader.GetInt32("StylistId"),
+                        Name = reader.GetString("Name"),
+                        Specialties = reader.GetString("Specialties")
+                    };
+                }
+            }
+        }
+        return null;
     }
 }
