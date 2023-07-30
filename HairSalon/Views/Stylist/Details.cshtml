@@ -1,8 +1,7 @@
 ﻿@model HairSalon.Models.Stylist;
 @{
-    ViewData["Title"] = "Deatils";   
+    ViewData["Title"] = "Details";
 }
-
 
 <h1>Stylist Details</h1>
 
@@ -10,3 +9,5 @@
 <p><strong>Specialties:</strong> @Model.Specialties</p>
 
 <a class="btn btn-primary" asp-action="Index">Back to List</a>
+
+<a class="btn btn-secondary" href="@Url.Action("Index", "Clients", new { StylistId = Model.StylistId })">View Clients for this Stylist</a>
