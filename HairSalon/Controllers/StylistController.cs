@@ -4,44 +4,20 @@ using MySqlConnector;
 
 public class StylistController : Controller
 {
-    // Helper method to get the database connection
-    private MySqlConnection GetConnection()
+    private static MySqlConnection GetConnection()
     {
         return new MySqlConnection(DBConfiguration.ConnectionString);
     }
-
-    // Action to view a list of all stylists
     public IActionResult Index()
     {
-        List<Stylist> stylists = new List<Stylist>();
-        using (MySqlConnection conn = GetConnection())
-        {
-            conn.Open();
-            string sql = "SELECT * FROM Stylist";
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
-            using (var reader = cmd.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    Stylist stylist = new Stylist
-                    {
-                        StylistId = reader.GetInt32("StylistId"),
-                        Name = reader.GetString("Name"),
-                        Specialties = reader.GetString("Specialties")
-                    };
-                    stylists.Add(stylist);
-                }
-            }
-        }
-        return View(stylists);
+        
+        return View(GetStylistsByName(""));
     }
 
-    // Action to search for stylists by name
     public IActionResult Search(string name)
     {
         if (string.IsNullOrEmpty(name))
         {
-            // If the search query is empty or null, redirect to the Index action
             return RedirectToAction("Index");
         }
 
@@ -49,8 +25,7 @@ public class StylistController : Controller
         return View("Index", searchResults);
     }
 
-    // Helper method to get stylists by name from the database
-    private List<Stylist> GetStylistsByName(string name)
+    public static List<Stylist> GetStylistsByName(string name)
     {
         List<Stylist> stylists = new List<Stylist>();
         using (MySqlConnection conn = GetConnection())
@@ -75,9 +50,6 @@ public class StylistController : Controller
         }
         return stylists;
     }
-
-
-    // Action to view details of a specific stylist
     public IActionResult Details(int? id)
     {
         if (id == null)
@@ -94,7 +66,6 @@ public class StylistController : Controller
         return View(stylist);
     }
 
-    // Helper method to get a stylist by ID from the database
     private Stylist GetStylistById(int id)
     {
         using (MySqlConnection conn = GetConnection())

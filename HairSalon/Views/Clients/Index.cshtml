@@ -1,7 +1,7 @@
 ﻿@model List<HairSalon.Models.Client>
+@using HairSalon.Controllers;
 @{
-    ViewData["Title"] = "Clients Deatils";
-
+    ViewData["Title"] = "Clients Details";
 }
 
 <h1>List of Clients</h1>
@@ -32,3 +32,37 @@ else
 {
     <p>No clients found.</p>
 }
+
+<h2>Add New Client</h2>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addClientModal">Add Client</button>
+<div class="modal fade" id="addClientModal" tabindex="-1" aria-labelledby="addClientModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addClientModalLabel">Add New Client</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-controller="Clients" asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="Name">Client Name</label>
+                        <input type="text" class="form-control" id="Name" name="Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="StylistId">Select Stylist</label>
+                        <select class="form-control" id="StylistId" name="StylistId">
+                            <option value="">-- Select a Stylist --</option>
+                            @foreach (var stylist in ViewBag.Stylists)
+                            {
+                                <option value="@stylist.StylistId">@stylist.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Client</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

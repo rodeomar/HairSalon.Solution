@@ -1,40 +1,56 @@
-﻿using HairSalon.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using HairSalon.Models;
 using MySqlConnector;
 
-namespace HairSalon.Controllers
+public class ClientsController : Controller
 {
-    public class ClientsController : Controller
+    private static MySqlConnection GetConnection()
     {
+        return new MySqlConnection(DBConfiguration.ConnectionString);
+    }
 
-
-        private MySqlConnection GetConnection()
+    public IActionResult Index()
+    {
+        ViewBag.Stylists = StylistController.GetStylistsByName("");
+        List<Client> clients = new List<Client>();
+        using (MySqlConnection conn = GetConnection())
         {
-            return new MySqlConnection(DBConfiguration.ConnectionString);
+            conn.Open();
+            string sql = "SELECT * FROM Client";
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Client client = new Client
+                    {
+                        ClientId = reader.GetInt32("ClientId"),
+                        Name = reader.GetString("Name"),
+                        StylistId = reader.GetInt32("StylistId")
+                    };
+                    clients.Add(client);
+                }
+            }
         }
-        public IActionResult Index()
+        return View(clients);
+    }
+
+    [HttpPost]
+    public IActionResult Create(string name, int? stylistId)
+    {
+        if (ModelState.IsValid)
         {
-            List<Client> clients = new List<Client>();
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                string sql = "SELECT * FROM Client";
+                string sql = "INSERT INTO Client (Name, StylistId) VALUES (@Name, @StylistId)";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        Client client = new Client
-                        {
-                            ClientId = reader.GetInt32("ClientId"),
-                            Name = reader.GetString("Name"),
-                            StylistId = reader.GetInt32("StylistId")
-                        };
-                        clients.Add(client);
-                    }
-                }
+                cmd.Parameters.AddWithValue("@Name", name);
+                cmd.Parameters.AddWithValue("@StylistId", stylistId ?? 0); 
+                cmd.ExecuteNonQuery();
             }
-            return View(clients);
+            return RedirectToAction("Index");
         }
+        return View("Add");
     }
 }
