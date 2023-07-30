@@ -89,4 +89,23 @@ public class StylistController : Controller
         }
         return null;
     }
+
+
+    public IActionResult Create(string name, string specialties)
+    {
+        if (ModelState.IsValid)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string sql = "INSERT INTO Stylist (Name, Specialties) VALUES (@Name, @Specialties)";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Name", name);
+                cmd.Parameters.AddWithValue("@Specialties", specialties);
+                cmd.ExecuteNonQuery();
+            }
+            return RedirectToAction("Index");
+        }
+        return View();
+    }
 }

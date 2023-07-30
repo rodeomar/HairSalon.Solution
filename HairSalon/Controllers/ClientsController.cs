@@ -74,9 +74,9 @@ public class ClientsController : Controller
 
         if (StylistId.HasValue)
         {
-            Console.WriteLine(StylistId);
+            
             List <Client> IDclients= GetAllClientsByStylistId(StylistId);
-            Console.WriteLine(IDclients.Count);
+            
             return View(IDclients);
         }
 
