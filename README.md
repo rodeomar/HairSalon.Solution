@@ -46,5 +46,13 @@ git clone https://github.com/rodeomar/HairSalon.Solution
 - To add a new client, click the "Add New Client" button on the client list page and fill in the required information, including selecting a stylist from the dropdown menu.
 - To search for a specific stylist or client, use the search bar and enter the name and click search. The list will update with the search results.
 
+- Known Bugs
+  None
+
+License
+Please let me know if you have any questions or concerns raed@alkhanbashi.gmail.com
+
+Copyright (c) 2023 Raed Alkhanbashi.
+
 
 
