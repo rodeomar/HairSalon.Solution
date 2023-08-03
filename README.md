@@ -38,6 +38,29 @@ git clone https://github.com/rodeomar/HairSalon.Solution
 
 5. Open your web browser and visit `https://localhost:5000` to access the application.
 
+-----------
+
+## Steps to Importing Database
+
+ 1. Go to MySQL workbench and open a connection
+ 2. Now on the right panel click on the `Administration`.
+ 3. Next Click on `Data Import/Restore`.
+ 4. Now check `Import from Self-Contained File.`
+ 5. Next Browse the file path or type/paste the path of the `.sql` file.
+ 6. Click `New` button to create new schema, or dump it into existing schema.
+ 7. Select the `Dump Structure Only` from drop-down list.
+ 8. Next click `Start Import`.
+
+![image](https://github.com/rodeomar/HairSalon.Solution/assets/120299308/724c8811-92e4-4996-b0b7-fca6b164fec6)
+
+<img src="https://github.com/rodeomar/HairSalon.Solution/assets/120299308/3f316fbd-e961-440b-93c8-31526ccd0e73" alt="image" width=225>
+<img src="https://github.com/rodeomar/HairSalon.Solution/assets/120299308/cc7b5621-d0ca-42cc-af94-0a061305a700" alt="image" width="780">
+
+
+🎉🎉Done
+
+
+--------------
 ## Usage
 
 - When you open the application, you will see a list of all stylists and their specialties.
@@ -53,6 +76,3 @@ License
 Please let me know if you have any questions or concerns raed@alkhanbashi.gmail.com
 
 Copyright (c) 2023 Raed Alkhanbashi.
-
-
-
