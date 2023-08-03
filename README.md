@@ -26,7 +26,7 @@ This is a web application for managing a hair salon. It allows users to view, ad
 git clone https://github.com/rodeomar/HairSalon.Solution
 ```
 
-2. Create a MySQL database and tables using the provided SQL scripts in the `HairSalon` Folder.
+2. [Import the database](https://github.com/rodeomar/HairSalon.Solution/blob/main/README.md#steps-to-importing-database) using the provided SQL scripts in the `HairSalon` Folder.
 
 3. Update the connection string in the `appsettings.json` file with your MySQL database credentials.
 ```
